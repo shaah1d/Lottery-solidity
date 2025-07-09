@@ -4,7 +4,7 @@ pragma solidity ^0.8.18;
 import "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.sol";
 
-abstract contract Raffle is VRFConsumerBaseV2 {
+ contract Raffle is VRFConsumerBaseV2 {
     // Errors
     error Raffle__SendMoreToEnterRaffle();
     error Raffle__TransferFailed();
