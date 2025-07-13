@@ -9,7 +9,8 @@ build:; forge build
 
 zkbuild :; forge build --zksync
 
-test :; forge test
+test :; forge test --match-test ${test} -vvvv
+# test :; forge test
 
 zktest :; foundryup-zksync && forge test --zksync && foundryup
 

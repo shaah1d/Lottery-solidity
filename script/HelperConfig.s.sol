@@ -3,6 +3,7 @@ pragma solidity ^0.8.18;
 
 import {Script} from "forge-std/Script.sol";
 import {VRFCoordinatorV2_5Mock} from "@chainlink/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
+import {LinkToken} from "test/mocks/LinkToken.sol";
 
 abstract contract codeContracts {
     // vrf valus //
@@ -25,6 +26,7 @@ contract HelperConfig is codeContracts, Script {
         bytes32 keyHash;
         uint64 subscriptionId;
         uint32 callbackGasLimit;
+        address link;
     }
 
     NetworkConfig public localNetworkConfig;
@@ -58,7 +60,8 @@ contract HelperConfig is codeContracts, Script {
                 interval: 30, // use seconds as uint without the `seconds` keyword
                 keyHash: 0x000000000000000000000000abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde,
                 subscriptionId: 0,
-                callbackGasLimit: 500000
+                callbackGasLimit: 500000,
+                link: 0x779877A7B0D9E8603169DdbD7836e478b4624789
             });
     }
 
@@ -73,6 +76,7 @@ contract HelperConfig is codeContracts, Script {
             MOCK_GAS_PRICE_LINK,
             MOCK_WEI_PER_UNIT_LINK
         );
+        LinkToken link = new LinkToken();
         vm.stopBroadcast();
 
         localNetworkConfig = NetworkConfig({
@@ -82,7 +86,9 @@ contract HelperConfig is codeContracts, Script {
             interval: 30,
             keyHash: 0x000000000000000000000000abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde,
             subscriptionId: 0,
-            callbackGasLimit: 500000
+            callbackGasLimit: 500000,
+            link: address(link)
         });
+         return localNetworkConfig;
     }
 }

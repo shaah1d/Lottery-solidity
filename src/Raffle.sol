@@ -133,4 +133,10 @@ import "@chainlink/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.s
     function getRecentWinner() public view returns (address) {
         return s_recentWinner;
     }
+    function getPlayer(uint256 index) external view returns (address){
+        return s_players[index];
+    }
+    function getRaffleState() external view returns (RaffleState) {
+        return s_raffleState;
+    }
 }
