@@ -16,7 +16,7 @@ contract RaffleTest is Test {
     uint256 entranceFee;
     uint256 interval;
     bytes32 keyHash;
-    uint64 subscriptionId;
+    uint256 subscriptionId;
     uint32 callbackGasLimit;
 
      event RaffleEntered(address indexed player);

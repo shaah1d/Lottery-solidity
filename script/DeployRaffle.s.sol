@@ -20,7 +20,8 @@ contract DeployRaffle is Script {
             ) = createSubscription.createSubscription(config.vrfCoordinatorV2);
 
             config.vrfCoordinatorV2 = vrfCoordinatorV2;
-            config.subscriptionId = uint64(returnedSubscriptionId);
+            // Fix: Don't cast to uint64, keep as uint256 for internal use
+            config.subscriptionId = returnedSubscriptionId;
         }
 
         //Fund 
@@ -31,8 +32,6 @@ contract DeployRaffle is Script {
             config.link
         );
         
-
-
         vm.startBroadcast();
         Raffle raffle = new Raffle(
             config.vrfCoordinatorV2,
@@ -53,3 +52,4 @@ contract DeployRaffle is Script {
         deployContract();
     }
 }
+

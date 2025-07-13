@@ -19,12 +19,11 @@ abstract contract codeContracts {
 
 contract HelperConfig is codeContracts, Script {
     struct NetworkConfig {
-      
         address vrfCoordinatorV2;
         uint256 entranceFee;
         uint256 interval;
         bytes32 keyHash;
-        uint64 subscriptionId;
+        uint256 subscriptionId;
         uint32 callbackGasLimit;
         address link;
     }
@@ -47,18 +46,18 @@ contract HelperConfig is codeContracts, Script {
             revert HelperConfig__InvalidChainId();
         }
     }
-    function getConfig() public returns (NetworkConfig memory){
+
+    function getConfig() public returns (NetworkConfig memory) {
         return getConfigBYChainId(block.chainid);
     }
 
     function getSepholiaEthConfig() public pure returns (NetworkConfig memory) {
         return
             NetworkConfig({
-               
                 vrfCoordinatorV2: 0xABcdEFABcdEFabcdEfAbCdefabcdeFABcDEFabCD,
                 entranceFee: 0.01 ether,
-                interval: 30, // use seconds as uint without the `seconds` keyword
-                keyHash: 0x000000000000000000000000abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde,
+                interval: 30,
+                keyHash: 0x6c3699283bda56ad74f6b855546325b68d482e983852a3c8d1b8d3031b56136d,
                 subscriptionId: 0,
                 callbackGasLimit: 500000,
                 link: 0x779877A7B0D9E8603169DdbD7836e478b4624789
@@ -80,15 +79,20 @@ contract HelperConfig is codeContracts, Script {
         vm.stopBroadcast();
 
         localNetworkConfig = NetworkConfig({
-           // Raffle contract address will be set later
+            // Raffle contract address will be set later
             vrfCoordinatorV2: address(vrfCoordinatorV2),
             entranceFee: 0.01 ether,
             interval: 30,
-            keyHash: 0x000000000000000000000000abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde,
+            keyHash: 0x6c3699283bda56ad74f6b855546325b68d482e983852a3c8d1b8d3031b56136d,
             subscriptionId: 0,
             callbackGasLimit: 500000,
             link: address(link)
         });
-         return localNetworkConfig;
+        return localNetworkConfig;
+    }
+
+    //setter
+    function setSubscriptionId(uint64 newSubId) public {
+        localNetworkConfig.subscriptionId = newSubId;
     }
 }
