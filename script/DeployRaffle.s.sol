@@ -20,7 +20,7 @@ contract DeployRaffle is Script {
             ) = createSubscription.createSubscription(config.vrfCoordinatorV2);
 
             config.vrfCoordinatorV2 = vrfCoordinatorV2;
-            // Fix: Don't cast to uint64, keep as uint256 for internal use
+            // Cast to uint64 for the contract constructor
             config.subscriptionId = returnedSubscriptionId;
         }
 
@@ -38,7 +38,7 @@ contract DeployRaffle is Script {
             config.entranceFee,
             config.interval,
             config.keyHash,
-            config.subscriptionId,
+            uint64(config.subscriptionId),  // Cast to uint64 here
             config.callbackGasLimit
         );
         vm.stopBroadcast();
@@ -52,4 +52,3 @@ contract DeployRaffle is Script {
         deployContract();
     }
 }
-

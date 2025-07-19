@@ -32,7 +32,7 @@ import "@chainlink/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.s
     // Chainlink VRF Variables
     VRFCoordinatorV2Interface private immutable i_vrfCoordinator;
     bytes32 private immutable i_keyHash;
-    uint256 private immutable i_subscriptionId;  // Changed from uint64 to uint256
+    uint64 private immutable i_subscriptionId;  // Changed back to uint64
     uint16 private constant REQUEST_CONFIRMATIONS = 3;
     uint32 private immutable i_callbackGasLimit;
     uint32 private constant NUM_WORDS = 1;
@@ -42,7 +42,7 @@ import "@chainlink/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.s
         uint256 entranceFee,
         uint256 interval,
         bytes32 keyHash,
-        uint256 subscriptionId,  // Changed from uint64 to uint256
+        uint64 subscriptionId,  // Changed back to uint64
         uint32 callbackGasLimit
     ) VRFConsumerBaseV2(vrfCoordinatorV2) {
         i_entranceFee = entranceFee;
@@ -94,7 +94,7 @@ import "@chainlink/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.s
 
         uint256 requestId = i_vrfCoordinator.requestRandomWords(
             i_keyHash,
-            uint64(i_subscriptionId),
+            i_subscriptionId,  // No casting needed now
             REQUEST_CONFIRMATIONS,
             i_callbackGasLimit,
             NUM_WORDS

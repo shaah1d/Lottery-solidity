@@ -23,7 +23,7 @@ contract HelperConfig is codeContracts, Script {
         uint256 entranceFee;
         uint256 interval;
         bytes32 keyHash;
-        uint256 subscriptionId;
+        uint256 subscriptionId;  // Keep as uint256 for internal handling
         uint32 callbackGasLimit;
         address link;
     }
@@ -79,7 +79,6 @@ contract HelperConfig is codeContracts, Script {
         vm.stopBroadcast();
 
         localNetworkConfig = NetworkConfig({
-            // Raffle contract address will be set later
             vrfCoordinatorV2: address(vrfCoordinatorV2),
             entranceFee: 0.01 ether,
             interval: 30,
@@ -91,8 +90,8 @@ contract HelperConfig is codeContracts, Script {
         return localNetworkConfig;
     }
 
-    //setter
+    //setter - updated to handle uint64
     function setSubscriptionId(uint64 newSubId) public {
-        localNetworkConfig.subscriptionId = newSubId;
+        localNetworkConfig.subscriptionId = uint256(newSubId);
     }
 }
