@@ -11,18 +11,21 @@ contract DeployRaffle is Script {
         HelperConfig helperConfig = new HelperConfig();
         HelperConfig.NetworkConfig memory config = helperConfig.getConfig();
 
-        if (config.subscriptionId == 0) {
-            CreateSubscription createSubscription = new CreateSubscription();
+      if (config.subscriptionId == 0) {
+    CreateSubscription createSubscription = new CreateSubscription();
 
-            (
-                uint256 returnedSubscriptionId,
-                address vrfCoordinatorV2
-            ) = createSubscription.createSubscription(config.vrfCoordinatorV2);
+    (
+        uint256 returnedSubscriptionId,
+        address vrfCoordinatorV2
+    ) = createSubscription.createSubscription(config.vrfCoordinatorV2);
 
-            config.vrfCoordinatorV2 = vrfCoordinatorV2;
-            // Cast to uint64 for the contract constructor
-            config.subscriptionId = returnedSubscriptionId;
-        }
+    config.vrfCoordinatorV2 = vrfCoordinatorV2;
+    config.subscriptionId = returnedSubscriptionId;
+
+    // ✅ Set it back into the config contract
+    helperConfig.setSubscriptionId(uint64(returnedSubscriptionId));
+}
+
 
         //Fund 
         FundSubscription fundSubscription = new FundSubscription();

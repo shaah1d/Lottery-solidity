@@ -19,7 +19,7 @@ contract RaffleTest is Test {
     uint256 subscriptionId;
     uint32 callbackGasLimit;
 
-     event RaffleEntered(address indexed player);
+    event RaffleEntered(address indexed player);
     event WinnerPicked(address indexed winner);
 
     function setUp() public {
@@ -51,28 +51,55 @@ contract RaffleTest is Test {
         raffle.enterRaffle{value: entranceFee}();
         address playerRecorded = raffle.getPlayer(0);
         assert(playerRecorded == player);
-
     }
+
     function testEnteringRaffleEmitsEvent() public {
         vm.prank(player);
         vm.expectEmit(true, false, false, false, address(raffle));
-        
+
         emit RaffleEntered(player);
         raffle.enterRaffle{value: entranceFee}();
     }
 
     function testDontAllowPlayersWhenCalculating() public {
         //Arrange
-         vm.prank(player);
+        vm.prank(player);
         raffle.enterRaffle{value: entranceFee}();
         vm.warp(block.timestamp + interval + 1);
         vm.roll(block.number + 1);
         raffle.performUpkeep("");
 
-        //Act 
-         vm.expectRevert(Raffle.Raffle__RaffleNotOpen.selector);
-         vm.prank(player);
-            raffle.enterRaffle{value: entranceFee}();
-            
+        //Act
+        vm.expectRevert(Raffle.Raffle__RaffleNotOpen.selector);
+        vm.prank(player);
+        raffle.enterRaffle{value: entranceFee}();
+    }
+
+    ///////////////////////////
+    //CHECKUPKEEP
+    ///////////////////////////
+
+    function testCheckUpKeepReturnsFalseIfNoBalance() public {
+        vm.warp(block.timestamp + interval + 1);
+        vm.roll(block.number + 1);
+
+        (bool upKeepNeeded, ) = raffle.checkUpkeep("");
+        assert(!upKeepNeeded);
+    }
+
+    function testCheckupKeepReturnsFalseIfRaffleNotOpen() public {
+      vm.prank(player);
+        raffle.enterRaffle{value: entranceFee}();
+        vm.warp(block.timestamp + interval + 1);
+        vm.roll(block.number + 1);
+        raffle.performUpkeep("");
+        Raffle.RaffleState raffleState = raffle.getRaffleState();
+
+        
+        (bool upkeepNeeded,) = raffle.checkUpkeep("");
+
+       
+        assert(raffleState == Raffle.RaffleState.CALCULATING);
+        assert(upkeepNeeded == false);
     }
 }
