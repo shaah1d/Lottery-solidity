@@ -4,16 +4,21 @@ pragma solidity ^0.8.18;
 import "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.sol";
 
- contract Raffle is VRFConsumerBaseV2 {
+contract Raffle is VRFConsumerBaseV2 {
     // Errors
     error Raffle__SendMoreToEnterRaffle();
     error Raffle__TransferFailed();
     error Raffle__RaffleNotOpen();
-    error Raffle__UpkeepNotNeeded(uint256 balance, uint256 numPlayers, uint256 raffleState);
-        
+    error Raffle__UpkeepNotNeeded(
+        uint256 balance,
+        uint256 numPlayers,
+        uint256 raffleState
+    );
+
     // Events
     event RaffleEntered(address indexed player);
     event WinnerPicked(address indexed winner);
+    event RequestRaffleWinner(uint256 indexed requestId);
 
     // Enum
     enum RaffleState {
@@ -51,7 +56,7 @@ import "@chainlink/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.s
         i_keyHash = keyHash;
         i_subscriptionId = subscriptionId;
         i_callbackGasLimit = callbackGasLimit;
-        
+
         s_lastTimeStamp = block.timestamp;
         s_raffleState = RaffleState.OPEN;
     }
@@ -67,7 +72,9 @@ import "@chainlink/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.s
         emit RaffleEntered(msg.sender);
     }
 
-    function checkUpkeep(bytes memory) public view returns (bool upkeepNeeded, bytes memory) {
+    function checkUpkeep(
+        bytes memory
+    ) public view returns (bool upkeepNeeded, bytes memory) {
         bool timeHasPassed = (block.timestamp - s_lastTimeStamp) >= i_interval;
         bool isOpen = s_raffleState == RaffleState.OPEN;
         bool hasBalance = address(this).balance > 0;
@@ -78,6 +85,7 @@ import "@chainlink/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.s
 
     function performUpkeep(bytes calldata /* performData */) external {
         (bool upkeepNeeded, ) = checkUpkeep("");
+        // require(upkeepNeeded, "Upkeep not needed");
         if (!upkeepNeeded) {
             revert Raffle__UpkeepNotNeeded(
                 address(this).balance,
@@ -85,25 +93,22 @@ import "@chainlink/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.s
                 uint256(s_raffleState)
             );
         }
-
-        // Set state to calculating even if VRF call fails
         s_raffleState = RaffleState.CALCULATING;
-
-        // Attempt randomness request; swallow failures in testing
-        try i_vrfCoordinator.requestRandomWords(
+        uint256 requestId = i_vrfCoordinator.requestRandomWords(
             i_keyHash,
             i_subscriptionId,
             REQUEST_CONFIRMATIONS,
             i_callbackGasLimit,
             NUM_WORDS
-        ) returns (uint256 requestId) {
-            // Request succeeded
-        } catch {
-            // Request failed; continue without revert
-        }
+        );
+
+        emit RequestRaffleWinner(requestId);
     }
 
-    function fulfillRandomWords(uint256, uint256[] memory randomWords) internal override {
+    function fulfillRandomWords(
+        uint256,
+        uint256[] memory randomWords
+    ) internal override {
         uint256 indexOfWinner = randomWords[0] % s_players.length;
         address payable recentWinner = s_players[indexOfWinner];
         s_recentWinner = recentWinner;

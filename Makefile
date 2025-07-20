@@ -22,6 +22,8 @@ anvil :; anvil -m 'test test test test test test test test test test test junk' 
 
 zk-anvil :; npx zksync-cli dev start
 
+coverage :; forge coverage --report debug > coverage.txt
+
 # Push with a single command
 push:
 	git add .
