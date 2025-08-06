@@ -8,34 +8,48 @@ import {AddConsumer, CreateSubscription, FundSubscription} from "./Interactions.
 
 contract DeployRaffle is Script {
     function run() external returns (Raffle, HelperConfig) {
-        HelperConfig helperConfig = new HelperConfig(); 
+        HelperConfig helperConfig = new HelperConfig();
         AddConsumer addConsumer = new AddConsumer();
         HelperConfig.NetworkConfig memory config = helperConfig.getConfig();
 
         if (config.subscriptionId == 0) {
             CreateSubscription createSubscription = new CreateSubscription();
-            (config.subscriptionId, config.vrfCoordinatorV2_5) =
-                createSubscription.createSubscription(config.vrfCoordinatorV2_5, config.account);
+            (
+                config.subscriptionId,
+                config.vrfCoordinatorV2_5
+            ) = createSubscription.createSubscription(
+                config.vrfCoordinatorV2_5,
+                config.account
+            );
 
             FundSubscription fundSubscription = new FundSubscription();
             fundSubscription.fundSubscription(
-                config.vrfCoordinatorV2_5, config.subscriptionId, config.link, config.account
+                config.vrfCoordinatorV2_5,
+                config.subscriptionId,
+                config.link,
+                config.account
             );
         }
 
         vm.startBroadcast(config.account);
         Raffle raffle = new Raffle(
-            config.vrfCoordinatorV2_5,
+            config.subscriptionId,
             config.gasLane,
             config.automationUpdateInterval,
             config.raffleEntranceFee,
             config.callbackGasLimit,
-            uint32(config.subscriptionId)
+            config.vrfCoordinatorV2_5
+            //issue was due to the structure of the constructor
         );
+
         vm.stopBroadcast();
 
-        
-        addConsumer.addConsumer(address(raffle), config.vrfCoordinatorV2_5, config.subscriptionId, config.account);
+        addConsumer.addConsumer(
+            address(raffle),
+            config.vrfCoordinatorV2_5,
+            config.subscriptionId,
+            config.account
+        );
         return (raffle, helperConfig);
     }
 }
