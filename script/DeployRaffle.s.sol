@@ -31,7 +31,7 @@ contract DeployRaffle is Script {
             );
         }
 
-        vm.startBroadcast(config.account);
+        vm.startBroadcast();
         Raffle raffle = new Raffle(
             config.subscriptionId,
             config.gasLane,
