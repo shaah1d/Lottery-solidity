@@ -70,11 +70,11 @@ contract HelperConfig is CodeConstants, Script {
 
     function getMainnetEthConfig() public pure returns (NetworkConfig memory mainnetNetworkConfig) {
         mainnetNetworkConfig = NetworkConfig({
-            subscriptionId: 0, // If left as 0, our scripts will create one!
+            subscriptionId: 965, // 0 so the contract will create one 
             gasLane: 0x9fe0eebf5e446e3c998ec9bb19951541aee00bb90ea201ae456421a2ded86805,
-            automationUpdateInterval: 30, // 30 seconds
+            automationUpdateInterval: 30, 
             raffleEntranceFee: 0.01 ether,
-            callbackGasLimit: 500000, // 500,000 gas
+            callbackGasLimit: 500000, 
             vrfCoordinatorV2_5: 0x271682DEB8C4E0901D1a1550aD2e64D568E69909,
             link: 0x514910771AF9Ca656af840dff83E8264EcF986CA,
             account: 0x643315C9Be056cDEA171F4e7b2222a4ddaB9F88D
@@ -83,14 +83,14 @@ contract HelperConfig is CodeConstants, Script {
 
     function getSepoliaEthConfig() public pure returns (NetworkConfig memory sepoliaNetworkConfig) {
         sepoliaNetworkConfig = NetworkConfig({
-            subscriptionId: 0, // If left as 0, our scripts will create one!
+            subscriptionId: 965, 
             gasLane: 0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c,
-            automationUpdateInterval: 30, // 30 seconds
+            automationUpdateInterval: 30, 
             raffleEntranceFee: 0.01 ether,
-            callbackGasLimit: 500000, // 500,000 gas
+            callbackGasLimit: 500000, 
             vrfCoordinatorV2_5: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B,
             link: 0x779877A7B0D9E8603169DdbD7836e478b4624789,
-            account: 0x643315C9Be056cDEA171F4e7b2222a4ddaB9F88D
+            account: 0xc601eD97eEf963cFe7725725d1E267cd3C9Bf089
         });
     }
 
@@ -111,10 +111,10 @@ contract HelperConfig is CodeConstants, Script {
 
         localNetworkConfig = NetworkConfig({
             subscriptionId: subscriptionId,
-            gasLane: 0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c, // doesn't really matter
-            automationUpdateInterval: 30, // 30 seconds
+            gasLane: 0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c, 
+            automationUpdateInterval: 30, 
             raffleEntranceFee: 0.01 ether,
-            callbackGasLimit: 500000, // 500,000 gas
+            callbackGasLimit: 500000, 
             vrfCoordinatorV2_5: address(vrfCoordinatorV2_5Mock),
             link: address(link),
             account: FOUNDRY_DEFAULT_SENDER

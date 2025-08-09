@@ -1,5 +1,10 @@
 -include .env
 
+ifneq (,$(wildcard .env))
+	include .env
+	export
+endif
+
 .PHONY: all test clean deploy fund help install snapshot format anvil zktest
 
 # Update Dependencies
@@ -30,3 +35,23 @@ push:
 	git commit -m "${msg}"
 	git branch -M main
 	git push -u origin main 
+
+deploy:
+	@forge script script/DeployRaffle.s.sol:DeployRaffle $(NETWORK_ARGS)
+
+createSubscription:
+	@forge script script/Interactions.s.sol:CreateSubscription $(NETWORK_ARGS)
+
+addConsumer:
+	@forge script script/Interactions.s.sol:AddConsumer $(NETWORK_ARGS)
+
+fundSubscription:
+	@forge script script/Interactions.s.sol:FundSubscription $(NETWORK_ARGS)
+
+deploy-sepolia:
+	@forge script script/DeployRaffle.s.sol:DeployRaffle \
+		--rpc-url $(SEPOLIA_RPC_URL) \
+		--broadcast \
+		--account default \
+		--verify \
+		--etherscan-api-key $(ETHERSCAN_API_KEY) \

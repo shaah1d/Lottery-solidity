@@ -32,14 +32,14 @@ This project implements a decentralized raffle (lottery) system where participan
 
 ### Test Coverage 
 
-| File                             | % Lines           | % Statements      | % Branches       | % Functions       |
-|----------------------------------|-------------------|-------------------|------------------|-------------------|
-| `script/DeployRaffle.s.sol`      | **90.00%** (18/20) | **95.83%** (23/24) | **100.00%** (1/1) | **50.00%** (1/2)   |
-| `script/HelperConfig.s.sol`      | **82.61%** (19/23) | **90.48%** (19/21) | **40.00%** (2/5)  | **66.67%** (4/6)   |
-| `script/Interactions.s.sol`      | **35.00%** (14/40) | **32.43%** (12/37) | **50.00%** (1/2)  | **33.33%** (3/9)   |
-| `src/Raffle.sol`                 | **64.00%** (32/50) | **65.96%** (31/47) | **60.00%** (3/5)  | **60.00%** (6/10)  |
-| `test/mocks/LinkToken.sol`       | **11.76%** (2/17)  | **7.69%** (1/13)   | **0.00%** (0/1)   | **20.00%** (1/5)   |
-| **Total**                        | **56.67%** (85/150)| **60.56%** (86/142)| **50.00%** (7/14) | **46.88%** (15/32) |
+| File                        | % Lines             | % Statements        | % Branches        | % Functions        |
+| --------------------------- | ------------------- | ------------------- | ----------------- | ------------------ |
+| `script/DeployRaffle.s.sol` | **71.43%** (10/14)  | **68.42%** (13/19)  | **0.00%** (0/1)   | **100.00%** (1/1)  |
+| `script/HelperConfig.s.sol` | **86.21%** (25/29)  | **92.59%** (25/27)  | **40.00%** (2/5)  | **66.67%** (4/6)   |
+| `script/Interactions.s.sol` | **11.48%** (7/61)   | **9.84%** (6/61)    | **0.00%** (0/3)   | **11.11%** (1/9)   |
+| `src/Raffle.sol`            | **81.03%** (47/58)  | **88.24%** (45/51)  | **75.00%** (3/4)  | **64.29%** (9/14)  |
+| `test/mocks/LinkToken.sol`  | **23.53%** (4/17)   | **15.38%** (2/13)   | **0.00%** (0/1)   | **40.00%** (2/5)   |
+| **Total**                   | **51.96%** (93/179) | **53.22%** (91/171) | **35.71%** (5/14) | **48.57%** (17/35) |
 
 
 ### Smart Contract Components
@@ -99,7 +99,7 @@ When deploying, you'll need to configure:
 
 ## Development Stack
 
-- **Solidity ^0.8.18**: Smart contract language
+- **Solidity ^0.8.19**: Smart contract language
 - **Foundry**: Development framework for testing and deployment
 - **Chainlink VRF v2**: Verifiable random number generation
 - **Chainlink Automation**: Automated smart contract execution
