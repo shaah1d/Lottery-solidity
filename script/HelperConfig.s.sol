@@ -81,18 +81,18 @@ contract HelperConfig is CodeConstants, Script {
         });
     }
 
-    function getSepoliaEthConfig() public pure returns (NetworkConfig memory sepoliaNetworkConfig) {
-        sepoliaNetworkConfig = NetworkConfig({
-            subscriptionId: 965, 
-            gasLane: 0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c,
-            automationUpdateInterval: 30, 
-            raffleEntranceFee: 0.01 ether,
-            callbackGasLimit: 500000, 
-            vrfCoordinatorV2_5: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B,
-            link: 0x779877A7B0D9E8603169DdbD7836e478b4624789,
-            account: 0xc601eD97eEf963cFe7725725d1E267cd3C9Bf089
-        });
-    }
+   function getSepoliaEthConfig() public pure returns (NetworkConfig memory sepoliaNetworkConfig) {
+    sepoliaNetworkConfig = NetworkConfig({
+        subscriptionId: 100875901746588881391186149340165042301372016268697071488448629982756963109888, 
+        gasLane: 0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c,
+        automationUpdateInterval: 30, // 30 seconds
+        raffleEntranceFee: 0.01 ether,
+        callbackGasLimit: 500000, // 500,000 gas
+        vrfCoordinatorV2_5: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B,
+        link: 0x779877A7B0D9E8603169DdbD7836e478b4624789,
+        account: 0xc601eD97eEf963cFe7725725d1E267cd3C9Bf089 
+    });
+}
 
     function getOrCreateAnvilEthConfig() public returns (NetworkConfig memory) {
         // Check to see if we set an active network config
