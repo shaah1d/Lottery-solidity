@@ -8,6 +8,9 @@
 <img src ="https://img.shields.io/badge/TypeScript-3178C6.svg?style=for-the-badge&logo=TypeScript&logoColor=white">
 <img src ="https://img.shields.io/badge/Tailwind%20CSS-06B6D4.svg?style=for-the-badge&logo=Tailwind-CSS&logoColor=white">
 <img src ="https://img.shields.io/badge/Vercel-000000.svg?style=for-the-badge&logo=Vercel&logoColor=white">
+<img src="https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white">
+<img src="https://img.shields.io/badge/Foundry-%23000000.svg?style=for-the-badge&logo=foundry&logoColor=white">
+<img src="https://img.shields.io/badge/Chainlink%20VRF-%23327AE4.svg?style=for-the-badge&logo=chainlink&logoColor=white">
 
 </p>
 
