@@ -1,6 +1,7 @@
 <h1 align="center">Lottery - A Decentralized Raffle System</h1>
 
 
+
 <p align="center">
 
 <img src ="https://img.shields.io/badge/React-61DAFB.svg?style=for-the-badge&logo=React&logoColor=black">
@@ -9,8 +10,8 @@
 <img src ="https://img.shields.io/badge/Vercel-000000.svg?style=for-the-badge&logo=Vercel&logoColor=white">
 
 </p>
-[(https://github.com/user-attachments/assets/5e5cd5e8-4cb0-4b9a-999e-8c6de6ab71a4)](https://rafflesolidity.vercel.app)
 
+[<img width="1920" height="1080" alt="lotterygithubbanner" src="https://github.com/user-attachments/assets/bcd9e82f-1660-49fc-8045-3a09664d040d" />](https://rafflesolidity.vercel.app)
 # Decentralized Raffle System
 
 Decentralized Raffle is a smart contract for a provably fair lottery system on Ethereum. Users enter by paying an entrance fee, and a winner is selected automatically using Chainlink VRF for random number generation and Chainlink Automation for execution. The contract handles entry, state management, randomness requests, and prize distribution. A Next.js frontend provides an interface for connecting wallets, entering raffles, viewing players, and triggering upkeep.
